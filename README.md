@@ -201,3 +201,45 @@ Link Google Docs:
 Mata Kuliah: Java Visual SIH-6406
 Tugas: TP5 — Character Manager Sprint #2
 Submission: GitHub dan Google Docs
+
+# TP8 – Character Manager Sprint #3
+
+## 1. Screenshot MainWindow
+
+Masukkan screenshot aplikasi Character Manager v0.3 yang menampilkan minimal 5 karakter dan statistik rata-rata level.
+![alt text](image.png)
+
+**Rata-rata Level: 8.33**
+
+## 2. Penjelasan Aliran Data dan MVC
+
+Pada program ini, Main.java bertugas membuat objek karakter dan memasukkan data ke dalam CharacterManager. CharacterManager berfungsi sebagai Model yang mengelola dan menyimpan seluruh data karakter. Selanjutnya, MainWindow berfungsi sebagai View yang mengambil data dari CharacterManager dan menampilkannya secara dinamis menggunakan JLabel. Pemisahan ini menerapkan konsep MVC sehingga pengelolaan data dan tampilan aplikasi menjadi lebih terstruktur.
+
+## 3. Karakter BaruJelaskan perbedaan program sekuensial (Main console di TP1–TP5) dan event-driven (GUI) dengan analogi sehari-hari
+
+1. Mengapa GUI Swing harus dijalankan lewat `SwingUtilities.invokeLater()`? Apa risiko jika diabaikan?
+2. Kode ini membuat jendela tidak muncul: `JFrame frame = new JFrame("Test"); JPanel panel = new JPanel(); panel.add(new JLabel("Halo")); frame.add(panel); frame.setSize(400, 300);` Identifikasi kesalahannya dan perbaikannya
+3. Mengapa `MainWindow extends JFrame` adalah relasi *is-a* sedangkan CharacterManager dengan ArrayList adalah *has-a*? Apa konsekuensinya?
+4. Di mana proses "ambil data dari CharacterManager lalu tampilkan ke JLabel" sebaiknya diletakkan: di View atau menunggu Controller? Jelaskan dengan prinsip MVC
+
+\
+
+
+Pada TP8 saya menambahkan dua karakter baru:
+
+1. **Lancelot**
+
+   - Tipe: WARRIOR
+   - Level: 12
+   - Alasan: Dipilih sebagai karakter petarung dengan level tinggi untuk menambah variasi karakter Warrior.
+
+2. **Luna**
+
+   - Tipe: MAGE
+   - Level: 9
+   - Alasan: Dipilih sebagai karakter penyihir untuk menambah variasi tipe karakter dan kemampuan serangan.
+
+## 4. Google Docs – Analisis GUI dan MVC
+
+Link Google Docs:
+[https://docs.google.com/document/d/1VVyV2-NQhEqBeKZ04fsFk877o1cU9Jlt/edit?usp=drive_link&ouid=117130834806065707688&rtpof=true&sd=true]
