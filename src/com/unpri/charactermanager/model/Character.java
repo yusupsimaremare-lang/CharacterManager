@@ -1,9 +1,10 @@
 
 package com.unpri.charactermanager.model;
 
+import java.util.Objects;
+
 public class Character {
 
-    // Atribut karakter
     private int id;
     private String name;
     private CharacterType type;
@@ -12,22 +13,28 @@ public class Character {
     private int attackPower;
     private int mana;
 
-    // Constructor pertama
+    private static int totalCharacterCreated = 0;
+
+    // Constructor
+    public Character(String name, CharacterType type) {
+        this(name, type, 1);
+    }
+
     public Character(String name, CharacterType type, int level) {
         this.name = name;
         this.type = type;
-        setLevel(level);
-        this.id = 0;
         this.mana = 0;
+        setLevel(level);
+        totalCharacterCreated++;
     }
 
-    // Constructor kedua
-    public Character(int id, String name, CharacterType type, int level) {
+    public Character(int id, String name,
+                     CharacterType type, int level) {
         this(name, type, level);
         this.id = id;
     }
 
-    // Getter dan Setter ID
+    // Getter dan setter
     public int getId() {
         return id;
     }
@@ -36,7 +43,6 @@ public class Character {
         this.id = id;
     }
 
-    // Getter dan Setter Name
     public String getName() {
         return name;
     }
@@ -45,7 +51,6 @@ public class Character {
         this.name = name;
     }
 
-    // Getter dan Setter Type
     public CharacterType getType() {
         return type;
     }
@@ -54,25 +59,29 @@ public class Character {
         this.type = type;
     }
 
-    // Getter Level
     public int getLevel() {
         return level;
     }
 
-    // Setter Level dengan perhitungan otomatis
     public void setLevel(int level) {
         if (level < 1) {
-            throw new IllegalArgumentException(
-                "Level tidak boleh kurang dari 1"
-            );
+            throw new IllegalArgumentException("Level minimal 1");
         }
 
         this.level = level;
-        this.hitPoints = level * 100;
-        this.attackPower = level * 10;
+
+        if (type == CharacterType.WARRIOR) {
+            this.hitPoints = 100 + (level * 10);
+            this.attackPower = 10 + (level * 5);
+        } else if (type == CharacterType.MAGE) {
+            this.hitPoints = 100 + (level * 10);
+            this.attackPower = 10 + (level * 5);
+        } else {
+            this.hitPoints = 100 + (level * 10);
+            this.attackPower = 10 + (level * 5);
+        }
     }
 
-    // Getter dan Setter HitPoints
     public int getHitPoints() {
         return hitPoints;
     }
@@ -81,7 +90,6 @@ public class Character {
         this.hitPoints = hitPoints;
     }
 
-    // Getter dan Setter AttackPower
     public int getAttackPower() {
         return attackPower;
     }
@@ -90,28 +98,43 @@ public class Character {
         this.attackPower = attackPower;
     }
 
-    // Getter Mana
     public int getMana() {
         return mana;
     }
 
-    // Setter Mana dengan validasi
     public void setMana(int mana) {
         if (mana < 0) {
             throw new IllegalArgumentException(
                 "Mana tidak boleh negatif!"
             );
         }
-
         this.mana = mana;
     }
 
-    // Memeriksa apakah karakter masih hidup
     public boolean isAlive() {
         return hitPoints > 0;
     }
 
-    // Menampilkan informasi karakter
+    public static int getTotalCharacterCreated() {
+        return totalCharacterCreated;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Character other = (Character) obj;
+        return Objects.equals(name, other.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
     @Override
     public String toString() {
         return "Character{" +
@@ -119,9 +142,8 @@ public class Character {
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 ", level=" + level +
-                ", hitPoints=" + hitPoints +
-                ", attackPower=" + attackPower +
-                ", mana=" + mana +
+                ", hp=" + hitPoints +
+                ", atk=" + attackPower +
                 '}';
     }
 }

@@ -3,76 +3,82 @@ package com.unpri.charactermanager;
 
 import com.unpri.charactermanager.model.Character;
 import com.unpri.charactermanager.model.CharacterType;
+import com.unpri.charactermanager.model.CharacterManager;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("=== Character Manager v0.1 ===");
-
-        // Membuat 3 karakter awal
-        Character hero = new Character(
-            1, "Arjuna", CharacterType.WARRIOR, 5
-        );
-
-        Character wizard = new Character(
-            2, "Merlin", CharacterType.MAGE, 3
-        );
-
-        Character scout = new Character(
-            3, "Athena", CharacterType.ARCHER, 4
-        );
-
-        // Menampilkan 3 karakter
-        System.out.println("\n=== Daftar Karakter ===");
-        System.out.println(hero);
-        System.out.println(wizard);
-        System.out.println(scout);
-
-        // Demo Level Up
-        System.out.println("\n=== Level Up ===");
-
-        hero.setLevel(hero.getLevel() + 1);
-
-        System.out.println("Arjuna setelah naik level:");
-        System.out.println(hero);
-
-        // Membuat karakter baru untuk Mini-Challenge
-        System.out.println("\n=== Mini Challenge ===");
-
-        Character healer = new Character(
-            4, "Luna", CharacterType.HEALER, 6
-        );
-
-        // Mengatur mana
-        healer.setMana(100);
-
-        // Menampilkan karakter baru
-        System.out.println(healer);
-
-        // Memeriksa status hidup
         System.out.println(
-            "Apakah Luna masih hidup? " + healer.isAlive()
+            "=== Character Manager v0.2 — CRUD Test ==="
         );
 
-        // Menguji validasi mana
-        System.out.println("\n=== Pengujian Validasi Mana ===");
+        CharacterManager manager = new CharacterManager();
 
-        try {
-            healer.setMana(-10);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+        // Membuat karakter
+        Character c1 = new Character(
+            "Arjuna", CharacterType.WARRIOR, 5
+        );
+
+        Character c2 = new Character(
+            "Merlin", CharacterType.MAGE, 3
+        );
+
+        Character c3 = new Character(
+            "Athena", CharacterType.ARCHER, 1
+        );
+
+        // Menambahkan karakter
+        System.out.println();
+
+        manager.addCharacter(c1);
+        manager.addCharacter(c2);
+        manager.addCharacter(c3);
+
+        // Menguji karakter duplikat
+        System.out.println();
+
+        manager.addCharacter(
+            new Character("Arjuna", CharacterType.WARRIOR)
+        );
+
+        System.out.println(
+            "\nTotal karakter saat ini: " +
+            manager.getTotalCharacters()
+        );
+
+        // Pencarian
+        System.out.println("\n--- Pencarian ---");
+
+        Character hasil = manager.findByName("Merlin");
+
+        if (hasil != null) {
+            System.out.println("Ditemukan: " + hasil);
         }
 
-        // Menguji karakter yang tidak hidup
-        System.out.println("\n=== Pengujian isAlive ===");
+        Character zeus = manager.findByName("Zeus");
 
-        healer.setHitPoints(0);
+        if (zeus == null) {
+            System.out.println(
+                "Zeus tidak ditemukan (sesuai harapan)"
+            );
+        }
+
+        // Penghapusan
+        System.out.println("\n--- Penghapusan ---");
+
+        manager.removeCharacter("Athena");
 
         System.out.println(
-            "Apakah Luna masih hidup? " + healer.isAlive()
+            "Total setelah hapus: " +
+            manager.getTotalCharacters()
         );
 
-        System.out.println("\n=== Program Selesai ===");
+        // Daftar karakter tersisa
+        System.out.println("\n--- Daftar Karakter Tersisa ---");
+
+        for (Character character : manager.getAllCharacters()) {
+            System.out.println(character);
+        }
     }
 }
